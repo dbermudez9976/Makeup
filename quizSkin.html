@@ -2,20 +2,59 @@
 
 <html lang="en">
 <head>
-  <title>skin</title>
+  <title>skin Quiz</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.js"></script>
+  <script type="text/template" id="ctmp">
+    <div class="card {{health}} w3-panel w3-border w3-border-black w3-hover-border-white">
+        <h1> {{description}} </h1>
+        <p>1) {{choice1}} </p>
+        <p>2)  {{choice2}} </p>
+        <input type="text" id="q{{id}}">
+    </div>
+   
+</script>
+  <script>
+    var data;
+    function loadJSON(){              
+        $.getJSON("https://makup-f056d.firebaseio.com/.json",function(results){
+            data = results;
+            displaydata()
+        })
+    }
+        function displaydata(){
+        var build = "";
+        var output = document.getElementById("output")
+        var tmp = document.getElementById("ctmp").innerHTML;
 
-  <style>
+        for(var key in data.skin){
+                build += Mustache.render(tmp,data.skin[key]);
+            }
+        
+
+        output.innerHTML = build; 
+    }
+
+   function grade(){
+            var score = 0;
+            for(var i = 1; i <= 3 ; i++){
+                var userAnswer =document.getElementById("q"+i).value
+                var correctAnswer = data.skin["q"+i].answer;
+                console.log(i + " " + userAnswer + " " + correctAnswer);
+                if(userAnswer == correctAnswer){
+                    score++
+                }
+            }
+            alert("Score:"+score)
+        }
+    
+    
+    </script>
+      <style>
     .mytext{
         font-size: 18pt;
         margin-left: 40px;
@@ -59,9 +98,9 @@
     .jumbotron {
         background-color:#ffbca2;
 }
-
 </style>
 </head>
+
 <body onload="loadJSON()">
     <div class="container">
       <div class="jumbotron">
@@ -112,36 +151,8 @@
             </ul>
           </div>
       </nav>
-    </br> </br>
-<div id="output"></div>
-
-    <div class="row">
-                <div class="col-md-6">
-                        <p><font face="verdana" size= "5"> “Dry skin is a common skin condition that affects millions of Americans each year. Medically known as Xerosis, dry skin can occur to anyone of any age, for a variety of reasons. Dry skin is characterized by a feeling of tightness in the skin, which is sometimes worse after water exposure whether that be in the shower or after hopping into the swimming pool.” (Bioclarity.com)</font></P>
-                    </div>
-                <div class="col-md-6 w3-container w3-center ">
-                    <img src="https://steptohealth.com/wp-content/uploads/2018/04/dry-keep-in-mind.jpg"  style="width:100%">
-                    <p class="text1">Dry skin</p>
-            </div>
-            </div>
-    </br> </br>
-<div id="output"></div>
-<div class="row">
-    <div class="col-md-6 w3-container w3-center ">
-            <img src="https://beautyundercoverproduction.s3.amazonaws.com/articles/images/000/000/390/article_page/Combination_skin_copy.jpg?1492759817"  style="width:120%">
-            <p class="text1">Combination skin</p>
+    <div id="output"></div>
+    <button onclick="grade()">Grade</button>
     </div>
-        <div class="col-md-6">
-                <p><font face="verdana" size= "5"> Combination skin can be dry or normal in some areas and oily in others, such as the T-zone (nose, forehead, and chin). The skin may need slightly different care in different areas based off of how much oil is produced by the skin. </font></P>
-            </div>
-    </div>
-</br> </br>
-<div class="row">
-        <div class="col-md-6">
-                <p><font face="verdana" size= "5"> “Oily skin is known medically as seborrhea and is caused by excess skin oil produced within the pores. During puberty and other life events, fluctuating hormones can result in increased androgen levels - androgens are considered one of the top oily skin causes. Androgens are male hormones present in both males and females that signal the maturation of the skin’s sebaceous glands. As these glands mature, oil production increases. “ (Bioclarity.com)</font></P>
-            </div>
-        <div class="col-md-6 w3-container w3-center ">
-            <img src="https://images.agoramedia.com/everydayhealth/gcms/Best-ingredients-for-oily-skin-01-pg-full.jpg"  style="width:80%">
-            <p class="text1">oily skin</p>
-    </div>
-    </div>
+</body>
+</html>
