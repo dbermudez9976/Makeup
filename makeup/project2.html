@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <title>Makeup</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script type="text/template" id="ctmp">
+    <div class="card {{health}} w3-panel w3-border w3-border-black w3-hover-border-white">
+        <h1> {{description}} </h1>
+        <p>{{choice1}} </p>
+        <p> {{choice2}} </p>
+    </div>
+   
+</script>
+  <script>
+    var data;
+    function loadJSON(){              
+        $.getJSON("https://makup-f056d.firebaseio.com/.json",function(results){
+            data = results;
+            displaydata()
+        })
+    }
+        function displaydata(){
+        var build = "";
+        var output = document.getElementById("output")
+        var tmp = document.getElementById("ctmp").innerHTML;
+
+        for(var key in data.eyeshadow){
+                build += Mustache.render(tmp,data.eyeshadow[index]);
+            }
+        
+
+        output.innerHTML = build; 
+    }
+
+   function grade(){
+            for(var i = 0; i <= 5 ; i++){
+                var userAnswer =document.getElementById("q"+i)
+                var correctAnswer = data.answer["q"+i].answer;
+                if(userAnswer == correctAnswer){
+                    score++
+                }
+            }
+            alert("Score:"+score)
+        }
+    
+    
+    </script>
+  <style>
+    .mytext{
+        font-size: 18pt;
+        margin-left: 40px;
+        text-shadow: black 2px ;
+        font-family: "arial";
+        
+    }.navbar {
+        margin-bottom: 0;
+        background-color:#c4bbbc;
+        font-size: 16px ;
+        letter-spacing: 4px;
+
+    }.navbar li a, .navbar .navbar-brand {
+        color: rgb(230, 219, 129) !important;
+    }.navbar-nav li a:hover, .navbar-nav li.active a {
+        background-color:#ffbca2 !important;
+
+    }.titles, .n{
+        background-color:#fee0d6;
+        color:plum;
+        text-align:center;
+       
+    }.q{
+        background-color:#fee0d6;
+        color:plum;
+        text-align:center;
+    }
+    .logo{
+        width:90%;
+    }
+    .item img{
+        width:1000px;
+    }
+    .modal  img{
+        width:100%
+    }
+    .jumbotron {
+        background-color:#ffbca2;
+
+    }
+
+
+
+  </style>
+</head>
+<body onload="loadJSON()">
+    <div class="container">
+      <div class="jumbotron">
+        <h1>Malina & Destiny</h1> 
+        <p>text</p> 
+      </div>
+      <nav class="navbar navbar-default">
+          <div class="container-fluid">
+
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="#">Home</a></li>
+              <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Application
+                <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Information</a></li>
+                    <li><a href="#">Quiz</a></li>
+                </ul>
+              </li>
+              <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Dangers/Ingredients
+                <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Information</a></li>
+                    <li><a href="#">Quiz</a></li>
+                </ul>
+              </li>
+              <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Products
+                <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Information</a></li>
+                    <li><a href="#">Quiz</a></li>
+                </ul>
+              </li>
+              <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">looks
+                <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Information</a></li>
+                    <li><a href="#">Quiz</a></li>
+                </ul>
+              </li>
+              <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">skin types
+                <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Information</a></li>
+                    <li><a href="#">Quiz</a></li>
+                </ul>
+              </li>
+
+
+            </ul>
+          </div>
+      </nav>
+
+
+      <div id="output"></div>
+      <div class="row">
+            <div class="col-md-8">
+                <h1 class="titles">title</h1>
+                <p><font face="verdana" size= "5"> Makeup is a fun way of showing creativity and self expression. Our website will teach you with pictures and easy to follow descriptions of different ways to apply your makeup in the look section. We will also teach you about different products and why they would work for your individual needs. Like everything in life there should be things you should be aware of, we will tell you about harmful ingredients you should be aware of. There is a section you can learn about different skin types as well. This will be helpful to find the right products for your skin.</font></P>
+                
+            </div>
+            
+            <div class="col-md-4">
+              <div class="row">
+                <div class = "col-md-12">
+                  <h2 class="titles ">subtopics</h2>
+                  <div class="panel panel-primary" style="background-color:#ffbca2"> 
+                    <div class="panel-heading " style="background-color:rgb(230, 219, 129)">Application</div>
+                    <div class="panel-body ">Panel Content</div>
+                    <div class="panel-footer ">Panel Footer</div>
+                  </div>
+
+                  <div class="panel panel-primary " style="background-color:#ffbca2">
+                    <div class="panel-heading" style="background-color:rgb(230, 219, 129)">Dangers/Ingredients</div>
+                    <div class="panel-body">In makeup there are many diferent ingresients that are used to make products.</div>
+                    <div class="panel-footer">Panel Footer</div>
+                  </div>
+                  <div class="panel panel-primary" style="background-color:#ffbca2">
+                    <div class="panel-heading" style="background-color:rgb(230, 219, 129)">Products</div>
+                    <div class="panel-body">Panel Content</div>
+                    <div class="panel-footer">Panel Footer</div>
+                  </div>
+                  <div class="panel panel-primary" style="background-color:#ffbca2">
+                    <div class="panel-heading" style="background-color:rgb(230, 219, 129)">Looks</div>
+                    <div class="panel-body">many makeup palets may be/ look the same but theyre different looks.</div>
+                    <div class="panel-footer">Panel Footer</div>
+                  </div>
+                  <div class="panel panel-primary" style="background-color:#ffbca2">
+                    <div class="panel-heading" style="background-color:rgb(230, 219, 129)">Skin Type</div>
+                    <div class="panel-body">With the different skin types there are different ways you need to take care of your skin</div>
+                    <div class="panel-footer">Panel Footer</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+      </div>
+
+
+</body>
+</html>
